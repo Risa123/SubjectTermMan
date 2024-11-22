@@ -1,21 +1,19 @@
-import React, { useState } from 'react';
-import './App.css';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-
-
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import MainPage from './templates/MainPage';
+import AllSubjects from './pages/AllSubjects';
 const App = () => {
+  const userName = "test testovací";
+  const b1 = "Seznam všech předmětů";
+  const b2 = "Seznam zapsaných předmětů";
+  const b3 = "Novinky";
+
   return (
     <BrowserRouter>
-      <header className="flex justify-between items-center bg-slate-100 p-4 shadow-md">
-        <h1 className="text-3xl font-bold">Triton university</h1>        
-      </header>
-      <main className="p-4">
-
-        <Routes>
- 
-        </Routes>
-      </main>
-      
+    <MainPage userName={userName} b1={b1} b2={b2} b3={b3}/>
+      <Routes>
+        <Route path="/" element={<AllSubjects />} />
+      </Routes>
     </BrowserRouter>
   );
 };
