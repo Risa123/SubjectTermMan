@@ -1,25 +1,23 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 
-function App() {
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <BrowserRouter>
+      <header className="flex justify-between items-center bg-slate-100 p-4 shadow-md">
+        <h1 className="text-3xl font-bold">Triton university</h1>        
       </header>
-    </div>
+      <main className="p-4">
+
+        <Routes>
+ 
+        </Routes>
+      </main>
+      
+    </BrowserRouter>
   );
-}
+};
 
 export default App;
