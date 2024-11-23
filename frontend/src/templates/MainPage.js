@@ -77,28 +77,33 @@ const MainPage = ({ userName, allSubjectsPrev, subjectPreview, news }) => {
           {/* Slider Section */}
           <div className="w-1/2 h-16 bg-gray-200 rounded-md p-4 flex items-center justify-between relative">
   {/* Nadpis a text na jednom řádku */}
-  <div className="flex items-center gap-4">
+  <div className="flex items-center w-full">
+  {/* Tlačítko Previous */}
+  <button
+    onClick={prevSlide}
+    className="w-8 h-8 bg-gray-400 rounded-full mr-2 text-white flex items-center justify-center hover:bg-gray-500"
+  >
+    ◀
+  </button>
+
+  {/* Nadpis a text s fixní šířkou */}
+  <div className="flex items-center justify-between w-full max-w-[70%] gap-4">
     <h2 className="text-lg font-bold">Novinky:</h2>
-    <p className="text-gray-800">{news[currentSlide]}</p>
+    <p className="text-gray-800 text-ellipsis overflow-hidden whitespace-nowrap">
+      {news[currentSlide]}
+    </p>
   </div>
 
-  {/* Navigační tlačítka */}
-  <div className="flex gap-2">
-    <button
-      onClick={prevSlide}
-      className="w-8 h-8 bg-gray-400 rounded-full text-white flex items-center justify-center hover:bg-gray-500"
-    >
-      ◀
-    </button>
-    <button
-      onClick={nextSlide}
-      className="w-8 h-8 bg-gray-400 rounded-full text-white flex items-center justify-center hover:bg-gray-500"
-    >
-      ▶
-    </button>
-  </div>
+  {/* Tlačítko Next */}
+  <button
+    onClick={nextSlide}
+    className="w-8 h-8 bg-gray-400 rounded-full ml-2 text-white flex items-center justify-center hover:bg-gray-500"
+  >
+    ▶
+  </button>
 </div>
-          </div>
+</div>
+</div>
       )}
     </div>
   );
