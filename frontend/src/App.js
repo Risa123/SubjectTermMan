@@ -4,15 +4,16 @@ import MainPage from './templates/MainPage';
 import AllSubjects from './pages/AllSubjects';
 const App = () => {
   const userName = "test testovací";
-  const b1 = "Seznam všech předmětů";
-  const b2 = "Seznam zapsaných předmětů";
-  const b3 = "Novinky";
+  const allSubjectsPrev = "Seznam všech předmětů";
+  const subjectPreview = "Seznam zapsaných předmětů";
+  const news = "Novinky";
 
   return (
     <BrowserRouter>
-    <MainPage userName={userName} b1={b1} b2={b2} b3={b3}/>
+    <MainPage userName={userName} allSubjectsPrev={allSubjectsPrev} subjectPreview={subjectPreview} news={news}/>
       <Routes>
-        <Route path="/" element={<AllSubjects />} />
+        <Route path="/" element={<AllSubjects />} />{// Zde je potřeba podmínka pro zbrazení všech předmětů. nebo zobrazení již přidaných předmětů.
+        }
       </Routes>
     </BrowserRouter>
   );
