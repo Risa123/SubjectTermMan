@@ -1,25 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import MainPage from './templates/MainPage';
+import AllSubjects from './pages/AllSubjects';
+const App = () => {
+  const userName = "test testovací";
+  const b1 = "Seznam všech předmětů";
+  const b2 = "Seznam zapsaných předmětů";
+  const b3 = "Novinky";
 
-function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+    <MainPage userName={userName} b1={b1} b2={b2} b3={b3}/>
+      <Routes>
+        <Route path="/" element={<AllSubjects />} />
+      </Routes>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;
