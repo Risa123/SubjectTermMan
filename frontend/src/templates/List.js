@@ -23,7 +23,6 @@ const List = () => {
               </button>
             </div>
           </li>
-       
       </ul>
   );
 };
