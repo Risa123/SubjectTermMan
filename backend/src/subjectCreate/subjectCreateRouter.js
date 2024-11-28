@@ -1,4 +1,3 @@
-const router = require("express").Router()
 const Ajv = require("ajv")
 const {BAD_REQUEST,INTERNAL_ERROR,CREATED} = require("../common")
 const abl = require("./subjectCreateAbl")
