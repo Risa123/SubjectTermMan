@@ -1,7 +1,6 @@
-const router = require("express").Router()
 const Ajv = require("ajv")
-const {BAD_REQUEST,INTERNAL_ERROR,OK} = require("../common")
-const abl = require("./userExistsAbl")
+const {BAD_REQUEST,INTERNAL_ERROR,OK} = require("../../common");
+const abl = require("./abl");
 
 const validate = new Ajv().compile({
    type:"object",
@@ -11,8 +10,8 @@ const validate = new Ajv().compile({
    },
    required:["name","password"],
    additionalProperties:false
-})
-router.post("/userExists",(req,res) =>{
+});
+module.exports = (req,res) =>{
     if(validate(req.body)){
        try{
         abl(req.body)
@@ -24,6 +23,4 @@ router.post("/userExists",(req,res) =>{
     }else{
         res.send(BAD_REQUEST)
     }
-})
-
-module.exports = router
+};
