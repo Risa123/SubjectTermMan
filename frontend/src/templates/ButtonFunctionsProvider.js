@@ -1,11 +1,10 @@
 import { useState } from 'react';
 
 function FunctionProvider() {
-    const [items, setItems] = useState([]);
-    const [isClicked] = useState(false);
-  
+    const [subjects, setSubjects] = useState([]);
+    
     const handleClick = (id) => {
-        setItems(items.map(item => 
+        setSubjects(subjects.map(item => 
           item.id === id ? { ...item, isClicked: true } : item
         ));
       };
@@ -13,12 +12,12 @@ function FunctionProvider() {
     const addNewSubject = () => {
       const newItem = {
         id: Date.now(),
-        name: `Předmět ${items.length + 1}`
+        name: `Předmět ${subjects.length + 1}`
       };
-      setItems([...items, newItem]);
+      setSubjects([...subjects, newItem]);
     };
   
-    return { items, isClicked, handleClick, addNewSubject };
+    return { subjects, handleClick, addNewSubject };
   };
 
 export default FunctionProvider;

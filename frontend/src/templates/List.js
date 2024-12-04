@@ -1,14 +1,14 @@
 import React from 'react';
-import FunctionProvider from './FunctionProvider';
+import FunctionProvider from './ButtonFunctionsProvider';
 
 const List = () => {
-  const { items, handleClick, addNewSubject } = FunctionProvider();
+  const { subjects, handleClick, addNewSubject } = FunctionProvider();
 
   return (
     <ul className="space-y-2 w-full max-w-md">
-      {items.map(item => (
-        <li key={item.id} className="py-2 px-4 rounded-lg bg-slate-400 hover:bg-slate-600 transition-all flex justify-between items-center">
-          <span className="flex-grow text-lg">{item.name}</span>
+      {subjects.map(subject => (
+        <li key={subject.id} className="py-2 px-4 rounded-lg bg-slate-400 hover:bg-slate-600 transition-all flex justify-between items-center">
+          <span className="flex-grow text-lg">{subject.name}</span>
           <div className="flex space-x-2">
             <button 
               className="bg-yellow-500 hover:bg-yellow-600 text-white rounded px-2 py-1"
@@ -21,15 +21,14 @@ const List = () => {
               Odstranit
             </button>
             <button
-              onClick={() => handleClick(item.id)}
-              disabled={item.isClicked}
+              onClick={() => handleClick(subject.id)}
               className={`rounded px-2 py-1 text-white ${
-                item.isClicked
+                subject.isClicked
                   ? 'bg-gray-400 cursor-not-allowed'
                   : 'bg-blue-500 hover:bg-blue-600'
               }`}
             >
-              {item.isClicked ? 'Byl jsi zapsán do předmětu' : 'Zapsat'}
+              {subject.isClicked ? 'Byl jsi zapsán do předmětu' : 'Zapsat'}
             </button>
           </div>
         </li>
