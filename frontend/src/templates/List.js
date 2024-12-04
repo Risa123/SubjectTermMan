@@ -1,29 +1,48 @@
 import React from 'react';
+import FunctionProvider from './FunctionProvider';
 
 const List = () => {
+  const { items, handleClick, addNewSubject } = FunctionProvider();
+
   return (
-      <ul className="space-y-2 w-full max-w-md">
-          <li  className="py-2 px-4 rounded-lg bg-slate-400 hover:bg-slate-600 focus:ring-2 focus:ring-slate-500 transition-all duration-300 flex justify-between items-center">
-            <span className="flex-grow text-lg">test test</span>{// dodělání funkčnosti načtení dat z databáze + přidání funkcí do buttonů + přidání linků do list itemů
-            }
-            <div className="fflex space-x-2">
-              <button
-                onClick={() => {
-                }}
-                className="bg-blue-500 hover:bg-blue-600 text-white rounded px-2 py-1"
-                >
-                Editovat
-              </button>
-              <button
-                onClick={() => {
-                }}
-                className="bg-red-500 hover:bg-red-600 text-white rounded px-2 py-1"
-              >
-                Odstranit
-              </button>
-            </div>
-          </li>
-      </ul>
+    <ul className="space-y-2 w-full max-w-md">
+      {items.map(item => (
+        <li key={item.id} className="py-2 px-4 rounded-lg bg-slate-400 hover:bg-slate-600 transition-all flex justify-between items-center">
+          <span className="flex-grow text-lg">{item.name}</span>
+          <div className="flex space-x-2">
+            <button 
+              className="bg-yellow-500 hover:bg-yellow-600 text-white rounded px-2 py-1"
+            >
+              Upravit
+            </button>
+            <button 
+              className="bg-red-500 hover:bg-yellow-600 text-white rounded px-2 py-1"
+            >
+              Odstranit
+            </button>
+            <button
+              onClick={() => handleClick(item.id)}
+              disabled={item.isClicked}
+              className={`rounded px-2 py-1 text-white ${
+                item.isClicked
+                  ? 'bg-gray-400 cursor-not-allowed'
+                  : 'bg-blue-500 hover:bg-blue-600'
+              }`}
+            >
+              {item.isClicked ? 'Byl jsi zapsán do předmětu' : 'Zapsat'}
+            </button>
+          </div>
+        </li>
+      ))}
+      <div className="flex justify-center items-center">
+        <button
+          onClick={addNewSubject}
+          className="bg-green-500 hover:bg-blue-600 text-white rounded px-2 py-1 w-48 max-w-full sm:mx-auto sm:w-48 transition-all"
+        >
+          Vytvořit nový předmět
+        </button>
+      </div>
+    </ul>
   );
 };
 
