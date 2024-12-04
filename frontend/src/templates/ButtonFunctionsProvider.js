@@ -4,17 +4,17 @@ function FunctionProvider() {
     const [subjects, setSubjects] = useState([]);
     
     const handleClick = (id) => {
-        setSubjects(subjects.map(item => 
-          item.id === id ? { ...item, isClicked: true } : item
+        setSubjects(subjects.map(subject => 
+          subject.id === id ? { ...subject, isClicked: true } : subject
         ));
       };
   
     const addNewSubject = () => {
-      const newItem = {
+      const newSubject = {
         id: Date.now(),
         name: `Předmět ${subjects.length + 1}`
       };
-      setSubjects([...subjects, newItem]);
+      setSubjects([...subjects, newSubject]);
     };
   
     return { subjects, handleClick, addNewSubject };
