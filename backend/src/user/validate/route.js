@@ -1,26 +1,16 @@
-const Ajv = require("ajv")
-const {BAD_REQUEST,INTERNAL_ERROR,OK} = require("../../common");
+const {OK,STRING_MAX,compileValidation,route} = require("../../common");
 const abl = require("./abl");
 
-const validate = new Ajv().compile({
+const validate = compileValidation({
    type:"object",
    properties:{
-     name:{type:"string"},
-     password:{type:"string"}
+     name:{
+      type:"string",
+      minLength:1,
+      maxLength:STRING_MAX
+    }
    },
-   required:["name","password"],
+   required:["name"],
    additionalProperties:false
 });
-module.exports = (req,res) =>{
-    if(validate(req.body)){
-       try{
-        abl(req.body)
-        res.send(OK)
-       }catch(e){
-         console.error(e.stack)
-         res.send(INTERNAL_ERROR)
-       }
-    }else{
-        res.send(BAD_REQUEST)
-    }
-};
+module.exports = (req,res) => route(req,res,validate,OK,abl)
