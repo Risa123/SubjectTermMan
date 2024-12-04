@@ -1,5 +1,5 @@
-const {compileValidation, route, OK} = require("../common");
-const abl = require("./subjectGetListAbl");
+const {compileValidation, route, OK} = require("../../common");
+const abl = require("./abl");
 
 const validate = compileValidation({
     type:"object",
