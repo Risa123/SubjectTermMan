@@ -28,7 +28,7 @@ function route(req, res, validate, successCode, abl) {
         console.error(e.stack);
         res.sendStatus(INTERNAL_ERROR);
        }
-     })
+     });
   } else {
     res.sendStatus(BAD_REQUEST);
   }

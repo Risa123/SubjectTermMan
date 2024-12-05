@@ -11,6 +11,6 @@ app.get("/subject/getList",require("./subject/getList/route"));
 app.post("/user/validate",require("./user/validate/route"));
 app.listen(PORT,() =>{
     database.connect();
-    console.log('server listening on port ${PORT}',PORT);
+    console.log(`server listening on port ${PORT}`);
 });
 process.on("beforeExit",_ => database.close());
