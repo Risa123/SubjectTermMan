@@ -1,7 +1,7 @@
-const database = require("./database");
+const database = require("../database");
 
-function create(assigment){
-    database.getAssigmentCollection().insert(assigment)
+async function create(assigment){
+    await database.getAssigmentCollection().insert(assigment);
 }
 function remove(id){
     database.getAssigmentCollection().deleteOne({_id:id})
