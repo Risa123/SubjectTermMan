@@ -17,9 +17,11 @@ async function update(filter,update){
    }
 }
 async function checkRole(authToken,role){
-  if((await get({authToken:authToken})).role != role){
+  const user = await get({authToken:authToken});  
+  if(user.role != role){
       throw new UserNotAuthorisedException(`user with role ${role} expected`);
   }
+  return user.name;
 }
 class UserNotAuthorisedException extends Error{
     constructor(message){

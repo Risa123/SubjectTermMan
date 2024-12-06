@@ -3,8 +3,8 @@ const {ObjectNotFoundException,getSubjectCollection} = require("../database");
 async function create(subject){
  await getSubjectCollection().insertOne(subject)
 }
-async function get(id){
-  const result =  await getSubjectCollection().findOne({_id:id});
+async function get(filter){
+  const result =  await getSubjectCollection().findOne(filter);
   if(!result){
      throw new ObjectNotFoundException("subject not found");
   }

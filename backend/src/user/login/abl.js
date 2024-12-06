@@ -2,8 +2,9 @@ const {update,get} = require("../dao")
 
 module.exports = async request =>{
     const filter = {name:request.name,password:request.password};
-    const role = (await get(filter)).role;
+    const user = await get(filter);
     const authToken = crypto.randomUUID();
-    await update(filter,{"$set":{authToken:authToken}})
-    return {authToken:authToken,role:role};
-}
+    await update(filter,{"$set":{authToken:authToken}});
+    console.log(`user ${user.name} logged in`);
+    return {authToken:authToken,role:user.role};
+};
