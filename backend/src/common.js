@@ -13,16 +13,18 @@ const STRING_MAX = 5000;
 const NOT_FOUND = 404;
 const UNAUTHORISED = 401;
 
-function compileValidation(scheme) {
+function compileValidation(scheme){
   return ajv.compile(scheme);
 }
 
-function route(req, res, validate, successCode, abl) {
+function route(req,res,validate,successCode,abl){
   if (validate(req.body)) {
      abl(req.body).then(data => res.status(successCode).json(data)).catch(e =>{
        if(e instanceof ObjectNotFoundException){
+         console.error(e.message);
          res.status(NOT_FOUND).send(e.message);
        }else if(e instanceof UserNotAuthorisedException){
+         console.error(e.message);
          res.status(UNAUTHORISED).send(e.message);
        }else{
         console.error(e.stack);
@@ -34,4 +36,4 @@ function route(req, res, validate, successCode, abl) {
   }
 }
 
-module.exports = { OK, CREATED, compileValidation, STRING_MAX, route };
+module.exports = {OK,CREATED,compileValidation,STRING_MAX,route};

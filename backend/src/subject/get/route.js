@@ -1,20 +1,19 @@
-const {OK,route, compileValidation,STRING_MAX} = require("../../common");
+const {OK,route, compileValidation} = require("../../common");
 const abl = require("./abl");
 
 const validate = compileValidation({
   type:"object",
   properties:{
-    userName:{
+    authToken:{
       type:"string",
-      minLength:1,
-      maxLength:STRING_MAX
+      format:"uuid"
     },
     subjectID:{
       type:"string",
       format:"uuid"
     }
   },
-  required:["userName","subjectID"],
+  required:["authToken","subjectID"],
   additionalProperties:false
 });
 module.exports = (req,res) => route(req,res,validate,OK,abl)

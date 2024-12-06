@@ -1,18 +1,18 @@
-const database = require("../database")
+const {getSubjectTermCollection} = require("../database");
 
 function get(id){
-    return database.getSubjectTermCollection().findOne({_id:id});
+    return getSubjectTermCollection().findOne({_id:id});
 }
 async function remove(id){
-    await database.getSubjectTermCollection().deleteOne({_id:id});
+    await getSubjectTermCollection().deleteOne({_id:id});
 }
-function create(subjectTerm){
-    database.getSubjectTermCollection().insert(subjectTerm);
+async function create(subjectTerm){
+    await getSubjectTermCollection().insert(subjectTerm);
 }
 function list(){
   return database.getSubjectTermCollection().find({});
 }
-function update(id,subjectTerm){
-    database.getSubjectTermCollection().update({_id:id},subjectTerm);
+async function update(id,subjectTerm){
+    await database.getSubjectTermCollection().update({_id:id},subjectTerm);
 }
 module.exports = {get,remove,create,list,update};
