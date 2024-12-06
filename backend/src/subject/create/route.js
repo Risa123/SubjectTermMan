@@ -4,10 +4,9 @@ const abl = require("./abl")
 const validate = compileValidation({
   type:"object",
   properties:{
-    userName:{
+    authToken:{
       type:"string",
-      minLength:1,
-      maxLength:STRING_MAX
+      format:"uuid"
     },
     name:{
       type:"string",
@@ -21,7 +20,7 @@ const validate = compileValidation({
     },
     credits:{type:"integer"}
   },
-  required:["userName","name","info","credits"],
+  required:["authToken","name","info","credits"],
   additionalProperties:false
 });
 module.exports = (req,res) => route(req,res,validate,CREATED,abl)
