@@ -10,6 +10,7 @@ app.get("/subject/get",require("./subject/get/route"));
 app.get("/subject/list",require("./subject/getList/route"));
 app.post("/user/login",require("./user/login/route"));
 app.post("/user/logOff",require("./user/logOff/route"));
+app.post("/activity/create",require("./activity/create/route"));
 app.listen(PORT,() =>{
     connect();
     console.log(`server listening on port ${PORT}`);
