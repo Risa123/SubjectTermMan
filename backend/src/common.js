@@ -18,7 +18,7 @@ function compileValidation(scheme){
 }
 
 function route(req,res,validate,successCode,abl){
-  if (validate(req.body)) {
+  if(validate(req.body)){
      abl(req.body).then(data => res.status(successCode).json(data)).catch(e =>{
        if(e instanceof ObjectNotFoundException){
          console.error(e.message);
@@ -31,8 +31,13 @@ function route(req,res,validate,successCode,abl){
         res.sendStatus(INTERNAL_ERROR);
        }
      });
-  } else {
-    res.sendStatus(BAD_REQUEST);
+  }else{
+    const errors = [];
+    for(const err of validate.errors){
+      errors.push(err.message);
+    }
+    console.error(errors);
+    res.status(BAD_REQUEST).send(errors);
   }
 }
 
