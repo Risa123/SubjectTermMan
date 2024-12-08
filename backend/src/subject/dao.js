@@ -14,9 +14,9 @@ async function list(){
   return await getSubjectCollection().find({});
 }
 async function update(id,subject){
-  await getUserColection().update({_id:id},subject);
+  await getSubjectCollection().updateOne({_id:id},subject);
 }
 async function remove(id){
-  await getSubjectCollection().removeOne({_id:id});
+  await getSubjectCollection().deleteOne({_id:id});
 }
 module.exports = {create,get,list,update,remove};

@@ -10,6 +10,6 @@ module.exports = async request =>{
     credits:request.credits
   };
   await create(subject);
-  console.log(`subject created ${JSON.stringify(subject)} by user ${user}`);
+  console.log(`subject  ${JSON.stringify(subject)} created by user ${user}`);
   return subject;
 }

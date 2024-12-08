@@ -13,6 +13,6 @@ function list(){
   return database.getSubjectTermCollection().find({});
 }
 async function update(id,subjectTerm){
-    await database.getSubjectTermCollection().update({_id:id},subjectTerm);
+    await database.getSubjectTermCollection().updateOne({_id:id},subjectTerm);
 }
 module.exports = {get,remove,create,list,update};
