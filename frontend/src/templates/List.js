@@ -1,15 +1,12 @@
 import React from 'react';
-import FunctionProvider from './SubjectProvider';
-import SubjectModal from './CreateSubjectModal';
+import { useContext } from 'react';
+import { SubjectContext } from './SubjectProvider';
+import CreateSubjectModal from './CreateSubjectModal';
+
 
 const List = () => {
-  const { 
-    subjects, 
-    handleClick, 
-    addNewSubject,
-    isModalOpen,
-    setIsModalOpen 
-  } = FunctionProvider();
+  const subjectContext = useContext(SubjectContext);
+  const subjects = subjectContext.getSubjects();
 
   return (
     <>
@@ -29,7 +26,7 @@ const List = () => {
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
               </button>
               <button
-                onClick={() => handleClick(subject.id)}
+                onClick={() => subjectContext.handleSignIn(subject.id)}
                 className={`rounded px-2 py-1 text-white ${
                   subject.isClicked
                     ? 'bg-gray-400 cursor-not-allowed'
@@ -43,18 +40,18 @@ const List = () => {
         ))}
         <div className="flex justify-center items-center">
           <button
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => subjectContext.setCreateModalOpen(true)}
             className="bg-green-500 hover:bg-green-600 text-white rounded px-2 py-1 w-48 max-w-full sm:mx-auto sm:w-48 transition-all duration-300"
           >
             Vytvořit nový předmět
           </button>
         </div>
       </ul>
-      
-      <SubjectModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)}
-        onSubmit={addNewSubject}
+     
+      <CreateSubjectModal
+        isOpen={subjectContext.isCreateModalOpen}
+        onClose={() => subjectContext.setCreateModalOpen(false)}
+        onSubmit={subjectContext.addNewSubject}
       />
     </>
   );

@@ -1,32 +1,44 @@
-import { useState } from 'react';
+import { createContext, useState } from 'react';
 
-function FunctionProvider() {
-    const [subjects, setSubjects] = useState([]);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-   
-    const handleClick = (id) => {
-        setSubjects(subjects.map(subject =>
-          subject.id === id ? { ...subject, isClicked: true } : subject
-        ));
+export const SubjectContext = createContext();
+
+export const SubjectProvider = ({ children }) => {
+  const [subjects, setSubjects] = useState([]);
+  const [isCreateModalOpen, setCreateModalOpen] = useState(false);
+
+  const handleSignIn = (id) => {
+    setSubjects(subjects.map(subject =>
+      subject.id === id ? { ...subject, isClicked: true } : subject
+    ));
+  };
+
+  const addNewSubject = (subjectName) => {
+    const newSubject = {
+      id: Date.now(),
+      name: subjectName,
+      isClicked: false
     };
- 
-    const addNewSubject = (subjectName) => {
-      const newSubject = {
-        id: Date.now(),
-        name: subjectName,
-        isClicked: false
-      };
-      setSubjects([...subjects, newSubject]);
-      setIsModalOpen(false);
-    };
- 
-    return { 
-      subjects, 
-      handleClick, 
+    setSubjects([...subjects, newSubject]);
+    setCreateModalOpen(false);
+  };
+
+  const getSubjects = () => {
+    return subjects.map(subject => ({
+      id: subject.id,
+      name: subject.name,
+      isClicked: subject.isClicked
+    }));
+  };
+
+  return (
+    <SubjectContext.Provider value={{
+      getSubjects,
+      handleSignIn,
       addNewSubject,
-      isModalOpen,
-      setIsModalOpen
-    };
+      isCreateModalOpen,
+      setCreateModalOpen
+    }}>
+      {children}
+    </SubjectContext.Provider>
+  );
 };
-
-export default FunctionProvider;

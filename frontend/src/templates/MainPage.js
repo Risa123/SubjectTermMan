@@ -78,7 +78,7 @@ const MainPage = ({ isLoggedIn, userName, allSubjectsPrev, subjectPreview, news 
 
             {/* Slider Section */}
             <div className="w-1/2 h-16 bg-gray-200 rounded-md p-4 flex items-center justify-between relative">
-            /* Nadpis a text na jednom řádku */
+            (/* Nadpis a text na jednom řádku */)
               <div className="flex items-center w-full">
                 <button
                 /* Tlačítko Previous */
@@ -122,7 +122,7 @@ const MainPage = ({ isLoggedIn, userName, allSubjectsPrev, subjectPreview, news 
             <h1 className="text-2xl font-semibold absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
               Triton University
             </h1>
-            // login button 
+            (// login button )
             <button className="w-28 h-10 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600 transition-all duration-300 absolute top-4 right-4">
               Login
             </button>

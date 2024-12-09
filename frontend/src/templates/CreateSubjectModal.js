@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const SubjectModal = ({ isOpen, onClose, onSubmit }) => {
+const CreateSubjectModal = ({ isOpen, onClose, onSubmit }) => {
   const [subjectName, setSubjectName] = useState('');
 
   const handleSubmit = (e) => {
@@ -57,4 +57,4 @@ const SubjectModal = ({ isOpen, onClose, onSubmit }) => {
   );
 };
 
-export default SubjectModal;
+export default CreateSubjectModal;
