@@ -3,6 +3,7 @@ const {close,connect} = require("./database");
 
 const PORT = 8000;
 const app = express();
+
 app.use(require("cors")());
 app.use(express.json());
 app.post("/subject/create",require("./subject/create/route"));
@@ -15,8 +16,10 @@ app.post("/subject/remove",require("./subject/remove/route"));
 app.post("/subject/update",require("./subject/update/route"));
 app.post("/activity/update",require("./activity/update/route"));
 app.post("/activity/remove",require("./activity/remove/route"));
+
 app.listen(PORT,() =>{
     connect();
     console.log(`server listening on port ${PORT}`);
 });
+
 process.on("beforeExit",_ => close());

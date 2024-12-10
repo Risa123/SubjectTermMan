@@ -27,4 +27,5 @@ const validate = compileValidation({
     required:["authToken","name","term","points","assigment"],
     additionalProperties:false
 });
+
 module.exports = (req,res) => route(req,res,validate,CREATED,abl)
