@@ -1,10 +1,14 @@
-const {compileValidation,STRING_MAX,route,CREATED} = require("../../common");
+const {compileValidation,STRING_MAX,route,OK} = require("../../common");
 const abl = require("./abl");
 
 const validate = compileValidation({
     type:"object",
     properties:{
         authToken:{
+            type:"string",
+            format:"uuid"
+        },
+        activityID:{
             type:"string",
             format:"uuid"
         },
@@ -24,8 +28,7 @@ const validate = compileValidation({
             maxLength:STRING_MAX
         }
     },
-    required:["authToken","name","term","points","assigment"],
-    additionalProperties:false
+    required:["authToken","activityID"]
 });
 
-module.exports = (req,res) => route(req,res,validate,CREATED,abl)
+module.exports = (req,res) => route(req,res,validate,OK,abl)

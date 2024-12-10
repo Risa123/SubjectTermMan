@@ -36,7 +36,7 @@ function route(req,res,validate,successCode,abl){
     for(const err of validate.errors){
       errors.push(err.message);
     }
-    console.error(errors);
+    console.error("bad request: " + errors);
     res.status(BAD_REQUEST).send(errors);
   }
 }
