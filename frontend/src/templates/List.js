@@ -1,7 +1,7 @@
 import React from 'react';
 import { useContext } from 'react';
 import { SubjectContext } from './SubjectProvider';
-import CreateSubjectModal from './CreateSubjectModal';
+import UniversalModal from './UniversalModal';
 
 
 const List = () => {
@@ -48,11 +48,17 @@ const List = () => {
         </div>
       </ul>
      
-      <CreateSubjectModal
+      <UniversalModal
         isOpen={subjectContext.isCreateModalOpen}
         onClose={() => subjectContext.setCreateModalOpen(false)}
         onSubmit={subjectContext.addNewSubject}
+        title="Nový předmět"
+        inputPlaceholder="Zadejte název předmětu"
+        submitButtonText="Vytvořit"
+        cancelButtonText="Zrušit"
+        twoInputs={false}
       />
+
     </>
   );
 };
