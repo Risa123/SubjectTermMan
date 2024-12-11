@@ -16,6 +16,9 @@ app.post("/subject/remove",require("./subject/remove/route"));
 app.post("/subject/update",require("./subject/update/route"));
 app.post("/activity/update",require("./activity/update/route"));
 app.post("/activity/remove",require("./activity/remove/route"));
+app.post("/subjectTerm/create",require("./subjectTerm/create/route"));
+app.post("/subjectTerm/remove",require("./subjectTerm/remove/route"));
+app.post("/subjectTerm/gradeActivity",require("./subjectTerm/gradeActivity/route"));
 
 app.listen(PORT,() =>{
     connect();

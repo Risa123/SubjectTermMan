@@ -1,7 +1,11 @@
-const {getSubjectTermCollection} = require("../database");
+const {getSubjectTermCollection,ObjectNotFoundException} = require("../database");
 
-function get(id){
-    return getSubjectTermCollection().findOne({_id:id});
+async function get(filter){
+    const result = await getSubjectTermCollection().findOne(filter);
+    if(!result){
+        throw new ObjectNotFoundException("subjectTerm not found");
+    }
+    return result;
 }
 
 async function remove(id){
@@ -9,15 +13,18 @@ async function remove(id){
 }
 
 async function create(subjectTerm){
-    await getSubjectTermCollection().insert(subjectTerm);
+    await getSubjectTermCollection().insertOne(subjectTerm);
 }
 
 function list(){
   return database.getSubjectTermCollection().find({});
 }
 
-async function update(id,subjectTerm){
-    await database.getSubjectTermCollection().updateOne({_id:id},subjectTerm);
+async function update(id,update){
+    const result = await getSubjectTermCollection().updateOne({_id:id},update);
+    if(result.matchedCount == 0){
+        throw new ObjectNotFoundException("subjectTerm not found");
+    }
 }
 
 module.exports = {get,remove,create,list,update};

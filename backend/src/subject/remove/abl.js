@@ -6,5 +6,4 @@ module.exports = async request =>{
     const subject = await get({_id:request.subjectID});
     await remove(request.subjectID);
     console.log(`subject ${subject.name} removed by user ${user.name}`);
-    return subject;
 };
