@@ -34,7 +34,7 @@ const MainPage = ({ isLoggedIn, userName, allSubjectsPrev, subjectPreview, news 
               Triton University
             </h1>
             <button className="w-28 h-10 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600 transition-all duration-300 absolute top-4 right-4">
-              Logout
+              Odhlásit
             </button>
           </div>
           <div className="absolute bottom-0 right-4 p-2 bg-gray-200 text-sm">
@@ -124,7 +124,7 @@ const MainPage = ({ isLoggedIn, userName, allSubjectsPrev, subjectPreview, news 
             </h1>
             (// login button )
             <button className="w-28 h-10 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600 transition-all duration-300 absolute top-4 right-4">
-              Login
+              Přihlásit
             </button>
           </div>
         </header>
