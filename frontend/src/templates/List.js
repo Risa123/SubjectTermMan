@@ -45,10 +45,7 @@ const List = () => {
                 </svg>
               </button>
               <button
-                onClick={() => {
-                  subjectContext.handleSignIn(subject.id);
-                }
-                }
+                onClick={() => subjectContext.handleSignIn(subject.id)}
                 className={`rounded px-2 py-1 text-white ${
                   subject.isClicked
                     ? 'bg-gray-400 cursor-not-allowed'
@@ -56,7 +53,6 @@ const List = () => {
                 }`}
               >
                 {subject.isClicked ? 'Byl jsi zapsán do předmětu' : 'Zapsat'}
-                {subject.isClicked ? true : false}
               </button>
               {/* <AssignmentHandInModal isAdmin={false}/> */}
               {/*<AssignmentTaskModal isAdmin={true}/>*/}
