@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import logo from "../icons/Triton_logo_Project_management.png";
 import UniversalModal from "./UniversalModal";
 import { post } from "../requestCommon";
@@ -8,6 +9,15 @@ const MainPage = ({ initialIsLoggedIn, userName, allSubjectsPrev, subjectPreview
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isModalOpen, setModalOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(initialIsLoggedIn);
+
+  const navigate = useNavigate();
+
+  const NavigateToAllSubjects = () => {
+    navigate("/AllSubjects");
+  };
+  const NavigateToSelectedSubjects = () => {
+    navigate("/SelectedSubjects")
+  }
 
   const toggleDropdown = () => {
     setIsDropdownOpen((prev) => !prev);
@@ -19,6 +29,10 @@ const MainPage = ({ initialIsLoggedIn, userName, allSubjectsPrev, subjectPreview
 
   const prevSlide = () => {
     setCurrentSlide((prev) => (prev - 1 + news.length) % news.length);
+  };
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    navigate("/");
   };
 
   const handleLoginSubmit = ({ inputValue, secondInputValue }) => {
@@ -54,7 +68,7 @@ const MainPage = ({ initialIsLoggedIn, userName, allSubjectsPrev, subjectPreview
             </h1>
             <button
               className="w-28 h-10 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600 transition-all duration-300 absolute top-4 right-4"
-              onClick={() => setIsLoggedIn(false)}
+              onClick={handleLogout}
             >
               Odhlásit
             </button>
@@ -88,10 +102,13 @@ const MainPage = ({ initialIsLoggedIn, userName, allSubjectsPrev, subjectPreview
         {isDropdownOpen && (
           <div className="w-full flex justify-between gap-4 mt-3 px-8">
             <div className="flex w-1/2 gap-4">
-              <button className="flex-1 h-16 bg-gray-200 text-black text-lg font-semibold hover:bg-gray-300 border border-white rounded-md">
+              <button className="flex-1 h-16 bg-gray-200 text-black text-lg font-semibold hover:bg-gray-300 border border-white rounded-md" 
+              onClick={NavigateToAllSubjects}>
                 {allSubjectsPrev}
+                
               </button>
-              <button className="flex-1 h-16 bg-gray-200 text-black text-lg font-semibold hover:bg-gray-300 border border-white rounded-md">
+              <button className="flex-1 h-16 bg-gray-200 text-black text-lg font-semibold hover:bg-gray-300 border border-white rounded-md"
+              onClick={NavigateToSelectedSubjects}>
                 {subjectPreview}
               </button>
             </div>

@@ -60,7 +60,7 @@ const List = () => {
               >
                 {subject.isClicked ? 'Byl jsi zapsán do předmětu' : 'Zapsat'}
               </button>
-              {/* <AssignmentHandInModal isAdmin={false}/> */}
+               {/* <AssignmentHandInModal isAdmin={false}/>  */}
               {/*<AssignmentTaskModal isAdmin={true}/>*/}
             </div>
           </li>
