@@ -59,7 +59,7 @@ const List = () => {
                 </svg>
               </button>
               <button
-  onClick={() => subjectContext.deleteSubject(subject.id)} // Použití deleteSubject
+  onClick={() => subjectContext.deleteSubject(subject.id)}
   className="bg-red-500 hover:bg-red-600 text-white rounded px-2 py-1 transition-all duration-300"
 >
                 <svg
@@ -90,7 +90,7 @@ const List = () => {
               >
                 {subject.isClicked ? "Byl jsi zapsán do předmětu" : "Zapsat"}
               </button>
-              {/*<AssignmentHandInModal isAdmin={false}/>*/}
+              {/* <AssignmentHandInModal isAdmin={false}/> */}
               {/*<AssignmentTaskModal isAdmin={true}/>*/}
             </div>
           </li>
