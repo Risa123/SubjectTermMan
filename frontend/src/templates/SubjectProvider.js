@@ -8,15 +8,15 @@ export const SubjectProvider = ({ children }) => {
 
   const handleSignIn = (id) => {
     setSubjects(subjects.map(subject =>
-      subject.id === id ? { ...subject, isClicked: true } : subject
+      subject.id === id ? { ...subject, isClicked: true, isSigned: true } : subject
     ));
   };
-
   const addNewSubject = (subjectName) => {
     const newSubject = {
       id: Date.now(),
       name: subjectName,
-      isClicked: false
+      isClicked: false,
+      isSigned: false
     };
     setSubjects([...subjects, newSubject]);
     setCreateModalOpen(false);
@@ -26,7 +26,8 @@ export const SubjectProvider = ({ children }) => {
     return subjects.map(subject => ({
       id: subject.id,
       name: subject.name,
-      isClicked: subject.isClicked
+      isClicked: subject.isClicked,
+      isSigned: subject.isSigned
     }));
   };
 
