@@ -22,11 +22,10 @@ const MainPage = ({ initialIsLoggedIn, userName, allSubjectsPrev, subjectPreview
   };
 
   const handleLoginSubmit = ({ inputValue, secondInputValue }) => {
-    post("user/login", { name: inputValue, password: secondInputValue } )
+    post("user/login", { name: inputValue, password: secondInputValue })
       .then((response) => {
         if (response.ok) {
           setIsLoggedIn(true);
-          
         } else {
           setIsLoggedIn(false);
         }

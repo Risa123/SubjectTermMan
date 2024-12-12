@@ -43,7 +43,7 @@ const UniversalModal = ({
               id="universalInput"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded "
+              className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               placeholder={inputPlaceholder}
               required
             />
@@ -62,7 +62,7 @@ const UniversalModal = ({
                 id="secondInput"
                 value={secondInputValue}
                 onChange={(e) => setSecondInputValue(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded "
+                className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 placeholder={secondInputPlaceholder}
                 required
               />
@@ -77,13 +77,13 @@ const UniversalModal = ({
                 setInputValue('');
                 setSecondInputValue('');
               }}
-              className="px-4 py-2 text-sm font-medium text-white bg-red-500 rounded hover:bg-red-600 focus:outline-none focus:ring-2 "
+              className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-400"
             >
               {cancelButtonText}
             </button>
             <button
               type="submit"
-              className="px-4 py-2 text-sm font-medium text-white bg-green-500 rounded hover:bg-green-600 focus:outline-none focus:ring-2 "
+              className="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               {submitButtonText}
             </button>
