@@ -1,6 +1,10 @@
+
 import React, { useState, useContext } from "react";
-import { SubjectContext } from "./SubjectProvider";
-import UniversalModal from "./UniversalModal";
+import { SubjectContext } from './SubjectProvider';
+import UniversalModal from './UniversalModal';
+import AssignmentTaskModal from './AssignmentTaskModal';
+import AssignmentHandInModal from './AssignmentHandInModal';
+
 
 const List = () => {
   const subjectContext = useContext(SubjectContext);
@@ -86,6 +90,8 @@ const List = () => {
               >
                 {subject.isClicked ? "Byl jsi zapsán do předmětu" : "Zapsat"}
               </button>
+              {/*<AssignmentHandInModal isAdmin={false}/>*/}
+              {/*<AssignmentTaskModal isAdmin={true}/>*/}
             </div>
           </li>
         ))}

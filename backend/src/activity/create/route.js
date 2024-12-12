@@ -22,9 +22,13 @@ const validate = compileValidation({
             type:"string",
             minLength:1,
             maxLength:STRING_MAX
+        },
+        subjectTerm:{
+            type:"string",
+            format:"uuid"
         }
     },
-    required:["authToken","name","term","points","assigment"],
+    required:["authToken","name","term","points","assigment","subjectTerm"],
     additionalProperties:false
 });
 

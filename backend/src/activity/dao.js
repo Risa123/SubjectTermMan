@@ -1,4 +1,4 @@
-const {getActivityCollection} = require("../database");
+const {getActivityCollection,ObjectNotFoundException} = require("../database");
 
 async function create(assigment){
     await getActivityCollection().insertOne(assigment);
@@ -13,7 +13,10 @@ function get(id){
 }
 
 async function update(id,assigment){
-    await getActivityCollection().updateOne({_id:id},assigment);
+    const result = await getActivityCollection().updateOne({_id:id},assigment);
+    if(result.modifiedCount == 0){
+       throw new ObjectNotFoundException("activity not found")
+    }
 }
 
 function list(){
