@@ -1,5 +1,6 @@
 const {checkRole,ROLE_ADMIN} = require("../../user/dao");
-const {create} = require("../dao");
+const activityDao = require("../dao");
+const subjectTermDao = require("../../subjectTerm/dao");
 
 module.exports = async request =>{
    const user = await checkRole(request.authToken,ROLE_ADMIN);
@@ -10,7 +11,8 @@ module.exports = async request =>{
       points:request.points,
       assigment:request.assigment
    };
-   await create(activity);
+   await activityDao.create(activity);
+   await subjectTermDao.update(request.subjectTerm,{"$push":{activities:activity._id}})
    console.log(`activity created ${JSON.stringify(activity)} by user ${user}`);
    return activity;
 };

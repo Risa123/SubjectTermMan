@@ -8,12 +8,16 @@ const validate = compileValidation({
             type:"string",
             format:"uuid"
         },
-        activityID:{
+        activity:{
+            type:"string",
+            format:"uuid"
+        },
+        subjectTerm:{
             type:"string",
             format:"uuid"
         }
     },
-    required:["authToken","activityID"],
+    required:["authToken","activity","subjectTerm"],
     additionalProperties:false
 });
 
