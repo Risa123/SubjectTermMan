@@ -13,7 +13,7 @@ const App = () => {
   return (
     <SubjectProvider>
       <BrowserRouter>
-        <MainPage userName={userName} allSubjectsPrev={allSubjectsPrev} subjectPreview={subjectPreview} news={news}/>
+        <MainPage userName={userName} allSubjectsPrev={allSubjectsPrev} subjectPreview={subjectPreview} news={news} initialIsLoggedIn={true}/>
         <Routes>
           <Route path="/" element={<AllSubjects />} />
         </Routes>
