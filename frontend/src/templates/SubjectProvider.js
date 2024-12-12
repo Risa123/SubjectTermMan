@@ -22,16 +22,6 @@ export const SubjectProvider = ({ children }) => {
     setCreateModalOpen(false);
   };
 
-  const deleteSubject = (id) => {
-    setSubjects(subjects.filter(subject => subject.id !== id));
-  };
-
-  const editSubject = (id, updatedSubject) => {
-    setSubjects(subjects.map(subject =>
-      subject.id === id ? { ...subject, ...updatedSubject } : subject
-    ));
-  };
-
   const getSubjects = () => {
     return subjects.map(subject => ({
       id: subject.id,
@@ -45,8 +35,6 @@ export const SubjectProvider = ({ children }) => {
       getSubjects,
       handleSignIn,
       addNewSubject,
-      deleteSubject,
-      editSubject, 
       isCreateModalOpen,
       setCreateModalOpen
     }}>
