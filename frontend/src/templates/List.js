@@ -1,19 +1,26 @@
 import React, { useContext, useState } from 'react';
 import { SubjectContext } from './SubjectProvider';
 import UniversalModal from './UniversalModal';
+import { useNavigate } from "react-router-dom";
 
-const List = () => {
+const List = ({navigateToDetail}) => {
   const subjectContext = useContext(SubjectContext);
   const subjects = subjectContext.getSubjects();
+  const navigate = useNavigate();
+
 
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [currentEditSubject, setCurrentEditSubject] = useState(null);
   const [inputValue, setInputValue] = useState('');
 
+
   const handleOpenEditModal = (subject) => {
     setCurrentEditSubject(subject);
     setInputValue(subject.name);
     setEditModalOpen(true);
+  };
+  const NavigateToDetail = () => {
+    navigate(navigateToDetail);
   };
 
   const handleEditSubmit = (newName) => {
@@ -33,7 +40,7 @@ const List = () => {
             key={subject.id}
             className="py-2 px-4 rounded-lg bg-slate-400 hover:bg-slate-600 transition-all flex justify-between items-center"
           >
-            <span className="flex-grow text-lg">{subject.name}</span>
+            <span className="flex-grow text-lg" onClick={NavigateToDetail}>{subject.name}</span>
             <div className="flex space-x-2">
               <button
                 onClick={() => handleOpenEditModal(subject)}
