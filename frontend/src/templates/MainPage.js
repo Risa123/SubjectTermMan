@@ -68,10 +68,20 @@ const MainPage = ({ initialIsLoggedIn, userName, allSubjectsPrev, subjectPreview
             </h1>
             <button
               className="w-28 h-10 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600 transition-all duration-300 absolute top-4 right-4"
-              onClick={handleLogout}
+              onClick={() => setModalOpen(true)}
             >
               Odhlásit
             </button>
+            <UniversalModal
+          isOpen={isModalOpen}
+          onClose={() => setModalOpen(false)}
+          onSubmit={handleLogout}
+          title="Odhlášení"
+          submitButtonText="Odhlásit"
+          cancelButtonText="Zrušit"
+          styleType = 'decision'
+          inputPlaceholder="Opravdu se chcete odhlásit?"
+        />
           </div>
           <div className="absolute bottom-0 right-4 p-2 bg-gray-200 text-sm">
             Jméno uživatele: {userName}
@@ -168,8 +178,11 @@ const MainPage = ({ initialIsLoggedIn, userName, allSubjectsPrev, subjectPreview
           secondInputPlaceholder="Zadejte heslo"
           submitButtonText="Přihlásit"
           cancelButtonText="Zrušit"
-          twoInputs={true}
+          styleType = 'twoinputs'
+        inputType = 'text'
+        secondInputType="password"
         />
+        
         <div className="mt-8 text-center">
           <p className="text-lg font-semibold">Please log in to access your subjects and updates.</p>
         </div>
