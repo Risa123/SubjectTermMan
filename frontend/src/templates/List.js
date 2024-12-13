@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { SubjectContext } from './SubjectProvider';
-import UniversalModal from './UniversalModal';
+import UniversalModal from './Modals/UniversalModal';
 import { useNavigate } from "react-router-dom";
 
 const List = ({navigateToDetail}) => {

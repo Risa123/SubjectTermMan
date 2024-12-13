@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../icons/Triton_logo_Project_management.png";
-import UniversalModal from "./UniversalModal";
+import UniversalModal from "./Modals/UniversalModal";
 import { post } from "../requestCommon";
 
 const MainPage = ({ initialIsLoggedIn, userName, allSubjectsPrev, subjectPreview, news }) => {
