@@ -4,6 +4,7 @@ import MainPage from './templates/MainPage';
 import AllSubjects from './pages/AllSubjects';
 import { SubjectProvider } from './templates/SubjectProvider';
 import SelectedSubjects from './pages/SelectedSubjects';
+import DetailPage from "./pages/DetailPage";
 
 const App = () => {
   const userName = "test testovací";
@@ -18,6 +19,7 @@ const App = () => {
         <Routes>
           <Route path="/AllSubjects" element={<AllSubjects />} />
           <Route path="/SelectedSubjects" element={<SelectedSubjects />} />
+          <Route path="/SubjectDetail" element={<DetailPage />} />
         </Routes>
       </BrowserRouter>
     </SubjectProvider>
