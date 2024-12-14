@@ -5,19 +5,22 @@ const ListModal = ({
   onClose,
   onSubmit,
   title,
-  inputPlaceholder,
+  listItems = [],
   submitButtonText,
   cancelButtonText,
 }) => {
-  const [inputValue, setInputValue] = useState('');
+  const [selectedItems, setSelectedItems] = useState([]);
+
+  const handleItemClick = (item) => {
+    setSelectedItems((prev) =>
+      prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
+    );
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (inputValue.trim()) {
-      const items = inputValue.split(',').map((item) => item.trim());
-      onSubmit({ items });
-      setInputValue('');
-    }
+    onSubmit(selectedItems);
+    setSelectedItems([]);
   };
 
   if (!isOpen) return null;
@@ -26,43 +29,40 @@ const ListModal = ({
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg p-6 w-96 max-w-full mx-4">
         <h2 className="text-xl font-bold mb-4">{title}</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label
-              htmlFor="listInput"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              {inputPlaceholder}
-            </label>
-            <input
-              type="text"
-              id="listInput"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded"
-              placeholder="Enter items separated by commas"
-              required
-            />
-          </div>
-          <div className="flex justify-end space-x-2">
-            <button
-              type="button"
-              onClick={() => {
-                onClose();
-                setInputValue('');
-              }}
-              className="px-4 py-2 text-sm font-medium text-white bg-red-500 rounded hover:bg-red-600 focus:outline-none focus:ring-2"
-            >
-              {cancelButtonText}
-            </button>
-            <button
-              type="submit"
-              className="px-4 py-2 text-sm font-medium text-white bg-green-500 rounded hover:bg-green-600 focus:outline-none focus:ring-2"
-            >
-              {submitButtonText}
-            </button>
-          </div>
-        </form>
+        <div className="mb-4 max-h-60 overflow-y-auto">
+          <ul className="space-y-2">
+            {listItems.map((item, index) => (
+              <li
+                key={index}
+                className={`py-2 px-4 rounded-lg cursor-pointer ${
+                  selectedItems.includes(item) ? 'bg-green-200' : 'bg-gray-200'
+                }`}
+                onClick={() => handleItemClick(item)}
+              >
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="flex justify-end space-x-2">
+          <button
+            type="button"
+            onClick={() => {
+              onClose();
+              setSelectedItems([]);
+            }}
+            className="px-4 py-2 text-sm font-medium text-white bg-red-500 rounded hover:bg-red-600 focus:outline-none focus:ring-2"
+          >
+            {cancelButtonText}
+          </button>
+          <button
+            type="button"
+            onClick={handleSubmit}
+            className="px-4 py-2 text-sm font-medium text-white bg-green-500 rounded hover:bg-green-600 focus:outline-none focus:ring-2"
+          >
+            {submitButtonText}
+          </button>
+        </div>
       </div>
     </div>
   );
