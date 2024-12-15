@@ -1,6 +1,7 @@
 import React from 'react';
 import OneInputModal from './OneInputModal';
 import TwoInputsModal from './TwoInputsModal';
+import ThreeInputsModal from './ThreeInputsModal';
 import TextAreaModal from './TextAreaModal';
 import ListModal from './ListModal';
 import DecisionModal from './DecisionModal';
@@ -16,6 +17,8 @@ const UniversalModal = (props) => {
       return <OneInputModal {...props} />;
     case 'twoinputs':
       return <TwoInputsModal {...props} />;
+    case 'threeinputs':
+      return <ThreeInputsModal {...props} />;
     case 'textarea':
       return <TextAreaModal {...props} />;
     case 'list':
