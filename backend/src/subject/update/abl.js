@@ -1,5 +1,6 @@
 const {update,get} = require("../dao");
 const {checkRole,ROLE_ADMIN} = require("../../user/dao");
+const {log} = require("../../common");
 
 module.exports = async request =>{
   const user = await checkRole(request.authToken,ROLE_ADMIN);
@@ -12,6 +13,6 @@ module.exports = async request =>{
   }
   await update(request.subjectID,updateData);
   const subject = await get({_id:request.subjectID})
-  console.log(`subject ${JSON.stringify(subject)} update by user ${user}`);
+  log(user,`subject ${JSON.stringify(subject)} changed`);
   return subject;
 }

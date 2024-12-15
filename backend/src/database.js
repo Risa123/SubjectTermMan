@@ -2,7 +2,7 @@ const {MongoClient} = require("mongodb");
 
 const CONNECTION = "mongodb+srv://subjectTermMan:testX24@somecluster.zryzm.mongodb.net/?retryWrites=true&w=majority&appName=someCluster";
 const mongo = new MongoClient(CONNECTION);
-let userCollection,subjectCollection,subjectTermCollection,activityCollection;
+let userCollection,subjectCollection,subjectTermCollection,activityCollection,auditLogCollection;
 
 async function connect(){
   try{
@@ -12,6 +12,7 @@ async function connect(){
     subjectCollection = database.collection("subjects");
     activityCollection = database.collection("activities");
     subjectTermCollection = database.collection("subjectTerms");
+    auditLogCollection = database.collection("auditLog");
   }catch(e){
     await close();
     throw e;
@@ -38,6 +39,10 @@ function getActivityCollection(){
   return activityCollection;
 }
 
+function getAuditLogCollection(){
+  return auditLogCollection;
+}
+
 class ObjectNotFoundException extends Error{
   constructor(message){
     super(message);
@@ -45,4 +50,4 @@ class ObjectNotFoundException extends Error{
 }
 
 module.exports = {connect,close,getUserColection,getSubjectCollection,getSubjectTermCollection,getActivityCollection,
-  ObjectNotFoundException};
+  ObjectNotFoundException,getAuditLogCollection};
