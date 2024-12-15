@@ -1,5 +1,5 @@
 const Ajv = require("ajv");
-const {ObjectNotFoundException} = require("./database");
+const {ObjectNotFoundException,getAuditLogCollection} = require("./database");
 const {UserNotAuthorisedException} = require("./user/dao");
 
 const ajv = new Ajv();
@@ -41,4 +41,12 @@ function route(req,res,validate,successCode,abl){
   }
 }
 
-module.exports = {OK,CREATED,compileValidation,STRING_MAX,route};
+function log(user,action){
+ getAuditLogCollection().insertOne({
+   user:user._id,
+   action:action,
+   time:new Date()
+ });
+}
+
+module.exports = {OK,CREATED,compileValidation,STRING_MAX,route,log};

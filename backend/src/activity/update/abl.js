@@ -1,5 +1,6 @@
 const {checkRole,ROLE_ADMIN} = require("../../user/dao");
 const {update} = require("../dao");
+const {log} = require("../../common");
 
 module.exports = async request =>{
    const user = await checkRole(request.authToken,ROLE_ADMIN);
@@ -11,5 +12,5 @@ module.exports = async request =>{
       }
    }
    await update(request.activityID,updateData);
-   console.log(`activity updated by user ${user}`);
+   log(user,`activity changed`);
 };
