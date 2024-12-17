@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect} from 'react';
 import { SubjectContext } from './SubjectProvider';
 import UniversalModal from './Modals/UniversalModal';
 import { useNavigate } from "react-router-dom";
@@ -12,7 +12,12 @@ const List = ({navigateToDetail}) => {
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [currentEditSubject, setCurrentEditSubject] = useState(null);
   const [inputValue, setInputValue] = useState('');
+  const [isAdmin, setIsAdmin] = useState(false);
 
+  useEffect(() => {
+    const userRole = localStorage.getItem('userRole');
+    setIsAdmin(userRole === 'admin');
+  }, []);
 
   const handleOpenEditModal = (subject) => {
     setCurrentEditSubject(subject);
@@ -97,24 +102,28 @@ const List = ({navigateToDetail}) => {
           </li>
         ))}
         <div className="flex justify-center items-center">
-          <button
-            onClick={() => subjectContext.setCreateModalOpen(true)}
-            className="bg-green-500 hover:bg-green-600 text-white rounded px-2 py-1 w-48 max-w-full sm:mx-auto sm:w-48 transition-all duration-300"
-          >
-            Vytvořit nový předmět
-          </button>
+          {isAdmin && (
+            <button
+              onClick={() => subjectContext.setCreateModalOpen(true)}
+              className="bg-green-500 hover:bg-green-600 text-white rounded px-2 py-1 w-48 max-w-full sm:mx-auto sm:w-48 transition-all duration-300"
+            >
+              Vytvořit nový předmět
+            </button>
+          )}
         </div>
       </ul>
 
       <UniversalModal
         isOpen={subjectContext.isCreateModalOpen}
         onClose={() => subjectContext.setCreateModalOpen(false)}
-        onSubmit={(data) => subjectContext.addNewSubject(data.inputValue)}
+        onSubmit={subjectContext.addNewSubject}
         title="Nový předmět"
         inputPlaceholder="Zadejte název předmětu"
+        secondInputPlaceholder="Zadejte počet kreditů"
+        thirdInputPlaceholder="Zadejte popis předmětu"
         submitButtonText="Vytvořit"
         cancelButtonText="Zrušit"
-        styleType="oneinput"
+        styleType="threeinputs"
         inputType="text"
       />
 
