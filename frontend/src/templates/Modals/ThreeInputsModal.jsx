@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const ThreeInputsModal = ({
   isOpen,
@@ -11,23 +11,38 @@ const ThreeInputsModal = ({
   submitButtonText,
   cancelButtonText,
   inputType,
-  secondInputType,
+  defaultValues
 }) => {
   const [inputValue, setInputValue] = useState('');
   const [secondInputValue, setSecondInputValue] = useState('');
   const [thirdInputValue, setThirdInputValue] = useState('');
 
+  useEffect(() => {
+    if (defaultValues) {
+      setInputValue(defaultValues.inputValue);
+      setSecondInputValue(defaultValues.secondInputValue);
+      setThirdInputValue(defaultValues.thirdInputValue);
+    }
+  }, [defaultValues]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (inputValue.trim() && secondInputValue.trim() && thirdInputValue.trim()) {
-      onSubmit({ inputValue, secondInputValue, thirdInputValue });
-      setInputValue('');
-      setSecondInputValue('');
-      setThirdInputValue('');
+      onSubmit({
+        inputValue: inputValue.trim(),
+        secondInputValue: secondInputValue.trim(),
+        thirdInputValue: thirdInputValue.trim()
+      });
     }
   };
 
-  // Pokud není admin nebo modal není otevřený, nic nevykreslujeme
+  const handleClose = () => {
+    setInputValue('');
+    setSecondInputValue('');
+    setThirdInputValue('');
+    onClose();
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -36,14 +51,8 @@ const ThreeInputsModal = ({
         <h2 className="text-xl font-bold mb-4">{title}</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label
-              htmlFor="firstInput"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-            </label>
             <input
               type={inputType}
-              id="firstInput"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               className="w-full p-2 border border-gray-300 rounded"
@@ -52,14 +61,8 @@ const ThreeInputsModal = ({
             />
           </div>
           <div className="mb-4">
-            <label
-              htmlFor="secondInput"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-            </label>
             <input
-              type={secondInputType}
-              id="secondInput"
+              type={inputType}
               value={secondInputValue}
               onChange={(e) => setSecondInputValue(e.target.value)}
               className="w-full p-2 border border-gray-300 rounded"
@@ -68,13 +71,7 @@ const ThreeInputsModal = ({
             />
           </div>
           <div className="mb-4">
-            <label
-              htmlFor="textareaInput"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-            </label>
             <textarea
-              id="textareaInput"
               value={thirdInputValue}
               onChange={(e) => setThirdInputValue(e.target.value)}
               className="w-full p-2 border border-gray-300 rounded"
@@ -85,12 +82,7 @@ const ThreeInputsModal = ({
           <div className="flex justify-end space-x-2">
             <button
               type="button"
-              onClick={() => {
-                onClose();
-                setInputValue('');
-                setSecondInputValue('');
-                setThirdInputValue('');
-              }}
+              onClick={handleClose}
               className="px-4 py-2 text-sm font-medium text-white bg-red-500 rounded hover:bg-red-600 focus:outline-none focus:ring-2"
             >
               {cancelButtonText}
