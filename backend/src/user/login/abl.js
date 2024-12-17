@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const {update,get} = require("../dao")
 
 module.exports = async request =>{
