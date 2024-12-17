@@ -8,7 +8,7 @@ app.use(require("cors")());
 app.use(express.json());
 app.post("/subject/create",require("./subject/create/route"));
 app.get("/subject/get",require("./subject/get/route"));
-app.get("/subject/list",require("./subject/getList/route"));
+app.post("/subject/list",require("./subject/list/route"));
 app.post("/user/login",require("./user/login/route"));
 app.post("/user/logOff",require("./user/logOff/route"));
 app.post("/activity/create",require("./activity/create/route"));
@@ -19,7 +19,11 @@ app.post("/activity/remove",require("./activity/remove/route"));
 app.post("/subjectTerm/create",require("./subjectTerm/create/route"));
 app.post("/subjectTerm/remove",require("./subjectTerm/remove/route"));
 app.post("/subjectTerm/gradeActivity",require("./subjectTerm/gradeActivity/route"));
+app.post("/subjectTerm/submit",require("./subjectTerm/submit/route"));
 app.post("/subjectTerm/signUp",require("./subjectTerm/signUp/route"));
+app.get("/activity/get",require("./activity/get/route"));
+app.get("/subjectTerm/get",require("./subjectTerm/get/route"));
+
 
 app.listen(PORT,() =>{
     connect();

@@ -5,22 +5,22 @@ async function create(assigment){
 }
 
 async function remove(id){
-  await getActivityCollection().deleteOne({_id:id})
+  await getActivityCollection().deleteOne({_id:id});
 }
 
-function get(id){
-    return getActivityCollection.findOne({_id:id})
+function get(filter){
+    const result =  getActivityCollection().findOne(filter);
+    if(!result){
+        throw new ObjectNotFoundException("activity not found");
+    }
+    return result;
 }
 
 async function update(id,assigment){
     const result = await getActivityCollection().updateOne({_id:id},assigment);
     if(result.modifiedCount == 0){
-       throw new ObjectNotFoundException("activity not found")
+       throw new ObjectNotFoundException("activity not found");
     }
 }
 
-function list(){
-  return getActivityCollection.find({});
-}
-
-module.exports = {create,remove,get,update,list};
+module.exports = {create,remove,get,update};
