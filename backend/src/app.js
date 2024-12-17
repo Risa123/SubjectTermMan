@@ -19,6 +19,7 @@ app.post("/activity/remove",require("./activity/remove/route"));
 app.post("/subjectTerm/create",require("./subjectTerm/create/route"));
 app.post("/subjectTerm/remove",require("./subjectTerm/remove/route"));
 app.post("/subjectTerm/gradeActivity",require("./subjectTerm/gradeActivity/route"));
+app.post("/subjectTerm/signUp",require("./subjectTerm/signUp/route"));
 
 app.listen(PORT,() =>{
     connect();
