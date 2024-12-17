@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const {log} = require("../../common");
 const {update,get} = require("../dao")
 

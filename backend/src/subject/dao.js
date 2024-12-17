@@ -13,7 +13,7 @@ async function get(filter){
 }
 
 async function list(){
-  return await getSubjectCollection().find({});
+  return (await getSubjectCollection().find({})).toArray();
 }
 
 async function update(id,subject){
