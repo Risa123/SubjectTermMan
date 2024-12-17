@@ -21,7 +21,7 @@ async function checkRole(authToken,role){
   if(user.role != role){
       throw new UserNotAuthorisedException(`user with role ${role} expected`);
   }
-  return user.name;
+  return user;
 }
 class UserNotAuthorisedException extends Error{
     constructor(message){

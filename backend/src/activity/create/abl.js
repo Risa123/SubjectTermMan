@@ -13,6 +13,6 @@ module.exports = async request =>{
    };
    await activityDao.create(activity);
    await subjectTermDao.update(request.subjectTerm,{"$push":{activities:activity._id}})
-   console.log(`activity created ${JSON.stringify(activity)} by user ${user}`);
+   log(user,`activity created ${JSON.stringify(activity)}`);
    return activity;
 };

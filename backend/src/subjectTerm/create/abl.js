@@ -1,6 +1,7 @@
 const subjectTermDao = require("../dao");
 const userDao = require("../../user/dao");
-const subjectDao = require("../../subject/dao")
+const subjectDao = require("../../subject/dao");
+const {log} = require("../../common");
 
 module.exports = async request =>{
   const user = await userDao.checkRole(request.authToken,userDao.ROLE_ADMIN);
@@ -16,6 +17,6 @@ module.exports = async request =>{
     students:[]
   };
   await subjectTermDao.create(subjectTerm);
-  console.log(`subjectTerm ${JSON.stringify(subjectTerm.name)} created by user ${user}`);
+  log(user,`subjectTerm ${JSON.stringify(subjectTerm.name)} created`);
   return subjectTerm;
 }
