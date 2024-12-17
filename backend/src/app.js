@@ -20,6 +20,8 @@ app.post("/subjectTerm/create",require("./subjectTerm/create/route"));
 app.post("/subjectTerm/remove",require("./subjectTerm/remove/route"));
 app.post("/subjectTerm/gradeActivity",require("./subjectTerm/gradeActivity/route"));
 app.post("/subjectTerm/signUp",require("./subjectTerm/signUp/route"));
+app.get("/activity/get",require("./activity/get/route"));
+app.get("/subjectTerm/get",require("./subjectTerm/get/route"));
 
 app.listen(PORT,() =>{
     connect();

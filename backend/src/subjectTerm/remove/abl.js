@@ -4,8 +4,7 @@ const {log} = require("../../common");
 
 module.exports = async request =>{
     const user = await checkRole(request.authToken,ROLE_ADMIN);
-    const subjectTerm = await get({_id:request.subjectTermID});
-    await remove(request.subjectTermID);
-    console.log(subjectTerm);
+    const subjectTerm = await get({_id:request.subjectTerm});
+    await remove(request.subjectTerm);
     log(user,`subjectTerm ${subjectTerm.name} removed`);
 };
