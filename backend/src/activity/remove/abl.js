@@ -7,5 +7,5 @@ module.exports = async request =>{
    const user = await checkRole(request.authToken,ROLE_ADMIN);
    await activityDao.remove(request.activity);
    await subjectTermDao.update(request.subjectTerm,{"$pull":{activities:request.activity}});
-   log(user,`activity ${request.activity}`);
+   log(user,`activity removed ${request.activity}`);
 };

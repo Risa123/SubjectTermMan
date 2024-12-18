@@ -31,6 +31,8 @@ const MainPage = ({ initialIsLoggedIn, userName, allSubjectsPrev, subjectPreview
     setCurrentSlide((prev) => (prev - 1 + news.length) % news.length);
   };
   const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('userRole');
     setIsLoggedIn(false);
     navigate("/");
   };
@@ -46,7 +48,9 @@ const MainPage = ({ initialIsLoggedIn, userName, allSubjectsPrev, subjectPreview
         return response.json();
       })
       .then((data) => {
-        console.log("Login response:", data);
+        localStorage.setItem('authToken', data.authToken);
+        localStorage.setItem('userRole', data.role);
+        console.log("Login successful");
       })
       .catch((error) => {
         console.error("Error during login:", error);
