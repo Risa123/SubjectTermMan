@@ -10,13 +10,13 @@ module.exports = async request =>{
   const subjectTerm = {
     _id:crypto.randomUUID(),
     name:request.name,
-    subject:request.subject,
     teacher:request.teacher,
     activities:[],
     evaluation:{},
     students:[]
   };
   await subjectTermDao.create(subjectTerm);
+  await subjectDao.update(request.subject,{"$push":{subjectTerms:subjectTerm._id}})
   log(user,`subjectTerm ${JSON.stringify(subjectTerm.name)} created`);
   return subjectTerm;
 }
