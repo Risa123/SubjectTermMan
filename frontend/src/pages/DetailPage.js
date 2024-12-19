@@ -6,6 +6,7 @@ import UniversalModal from "../templates/Modals/UniversalModal";
 const DetailPage = () => {
   const [isListModalOpen, setListModalOpen] = useState(false);
   const [isAssessmentModalOpen, setAssessmentModalOpen] = useState(false);
+  const [isCreateModalOpen, setCreateModalOpen] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
   const [currentItem, setCurrentItem] = useState(null); // Stav pro aktuální item
 
@@ -38,6 +39,10 @@ const DetailPage = () => {
     setListModalOpen(false);
   };
 
+  const handleCreateSubmit = () => {
+    setCreateModalOpen(false);
+  };
+
   const handleEditChange = (id, field, value) => {
     setEditedItems((prevItems) =>
       prevItems.map((item) =>
@@ -54,11 +59,17 @@ const DetailPage = () => {
   return (
     <div className="p-8 bg-gray-300 h-screen mt-5">
       <h1 className="text-2xl p-2 underline font-bold">Detail předmětu</h1>
-
+      
       <div className="flex mt-8 h-[calc(100%-5rem)]">
         <div className="w-52 bg-white p-4 rounded-lg shadow-md overflow-auto items-center">
           <h2 className="text-lg font-semibold mb-4">Seznam</h2>
-          <ul>
+          <button
+            onClick={() => setCreateModalOpen(true)}
+            className="bg-green-500 hover:bg-green-600 text-white rounded px-4 py-2 transition-all"
+          >
+            Vytvořit aktivitu
+          </button>
+          <ul className='p-4'>
             {items.map((item) => (
               <li key={item.id} className="mb-2">
                 {item.name} - {item.points} bodů
@@ -150,6 +161,19 @@ const DetailPage = () => {
         cancelButtonText="Zrušit"
         styleType="textarea"
         inputType="text"
+      />
+      <UniversalModal
+        isOpen={isCreateModalOpen}
+        onClose={() => setCreateModalOpen(false)}
+        onSubmit={handleCreateSubmit}
+        title={`Vytvořte novou aktivitu`}
+        inputPlaceholder="Název aktivity"
+        submitButtonText="Přidat"
+        cancelButtonText="Zrušit"
+        styleType="twoinputs"
+        inputType="text"
+        secondInputPlaceholder="Maximální počet kreditů"
+        secondInputType="number"
       />
 
       {isAssessmentModalOpen && (
