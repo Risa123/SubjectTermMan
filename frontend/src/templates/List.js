@@ -203,6 +203,7 @@ useEffect(() => {
         submitButtonText="Vytvořit"
         cancelButtonText="Zrušit"
         styleType="threeinputs"
+        secondInputType="number"
         inputType="text"
       />
 
@@ -218,6 +219,7 @@ useEffect(() => {
         cancelButtonText="Zrušit"
         styleType="threeinputs"
         inputType="text"
+        secondInputType="number"
         defaultValues={{
           inputValue: currentEditSubject?.inputValue || '',
           secondInputValue: currentEditSubject?.secondInputValue || '',
