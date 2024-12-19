@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { SubjectContext } from './SubjectProvider';
 import UniversalModal from './Modals/UniversalModal';
 import { useNavigate } from "react-router-dom";
+import { post } from "../requestCommon";
 
 const List = () => {
   const subjectContext = useContext(SubjectContext);
@@ -14,12 +15,45 @@ const List = () => {
   const [currentDeleteSubject, setCurrentDeleteSubject] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isStudent, setIsStudent] = useState(false);
+  const [enrolledTerms, setEnrolledTerms] = useState([]);
 
-  useEffect(() => {
-    const userRole = localStorage.getItem('userRole');
-    setIsAdmin(userRole === 'admin');
-    setIsStudent(userRole === 'student');
-  }, []);
+useEffect(() => {
+  const userRole = localStorage.getItem('userRole');
+  setIsAdmin(userRole === 'admin');
+  setIsStudent(userRole === 'student');
+
+  const loadEnrolledTerms = async () => {
+    const storedToken = localStorage.getItem('authToken');
+    if (!storedToken) {
+      return;
+    }
+    try {
+      const response = await post('subject/list', {
+        authToken: storedToken
+      });
+      if (response.ok) {
+        const data = await response.json();
+        const enrolledTermIds = [];
+        data.forEach(subject => {
+          if (subject.subjectTerms) {
+            subject.subjectTerms.forEach(term => {
+              if (term.students?.includes(localStorage.getItem('userId'))) {
+                enrolledTermIds.push(term._id || term);
+              }
+            });
+          }
+        });
+        setEnrolledTerms(enrolledTermIds);
+      }
+    } catch (error) {
+      console.error('Error loading enrolled terms:', error);
+    }
+  };
+
+  if (isStudent) {
+    loadEnrolledTerms();
+  }
+}, [isStudent]);
 
   const handleOpenEditModal = (subject) => {
     setCurrentEditSubject({
@@ -125,22 +159,22 @@ const List = () => {
                   </button>
                 </>
               )}
-              {isStudent && subject.subjectTerms.map(term => (
+              {isStudent && subject.subjectTerms.map(termId => (
                 <button
-                key={term._id}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  const studentId = localStorage.getItem('studentId');
-                  subjectContext.handleSignIn(term._id, term, studentId);  // Předejte term._id místo subject.id
-                }}
+                  key={termId}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    subjectContext.handleSignIn(termId);
+                    setEnrolledTerms([...enrolledTerms, termId]); // Přidáme termId do zapsaných
+                  }}
                   className={`rounded px-2 py-1 text-white ${
-                    term.students?.includes(/* student ID */) // check if student is already signed up
+                    enrolledTerms.includes(termId)
                       ? 'bg-gray-400 cursor-not-allowed'
                       : 'bg-blue-500 hover:bg-blue-600'
                   } transition-all duration-300`}
-                  disabled={term.students?.includes(/* student ID */)}
+                  disabled={enrolledTerms.includes(termId)}
                 >
-                  {term.students?.includes(/* student ID */) ? 'Zapsáno' : 'Zapsat'}
+                  {enrolledTerms.includes(termId) ? 'Zapsáno' : 'Zapsat'}
                 </button>
               ))}
             </div>
