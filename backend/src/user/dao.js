@@ -10,12 +10,14 @@ async function get(filter){
     }
     return result;
 }
+
 async function update(filter,update){
    const result = await getUserCollection().updateOne(filter,update);
    if(!result){
       throw new ObjectNotFoundException("user not found");
    }
 }
+
 async function checkRole(authToken,role){
   const user = await get({authToken:authToken});  
   if(user.role != role){
@@ -23,9 +25,11 @@ async function checkRole(authToken,role){
   }
   return user;
 }
+
 class UserNotAuthorisedException extends Error{
     constructor(message){
         super(message);
     }
 }
+
 module.exports = {get,ROLE_ADMIN,ROLE_STUDENT,ROLE_TEACHER,checkRole,UserNotAuthorisedException,update};

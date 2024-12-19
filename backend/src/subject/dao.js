@@ -12,8 +12,8 @@ async function get(filter){
   return result;
 }
 
-async function list(){
-  return (await getSubjectCollection().find({})).toArray();
+async function list(filter){
+  return (await getSubjectCollection().find(filter)).toArray();
 }
 
 async function update(id,subject){
