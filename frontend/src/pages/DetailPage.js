@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ListModal from '../templates/Modals/ListModal';
 import StudentAssessment from '../templates/Modals/StudentAssessment';
 import UniversalModal from "../templates/Modals/UniversalModal";
@@ -7,7 +7,15 @@ const DetailPage = () => {
   const [isListModalOpen, setListModalOpen] = useState(false);
   const [isAssessmentModalOpen, setAssessmentModalOpen] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
-  const [currentItem, setCurrentItem] = useState(null); // Stav pro aktuální item
+  const [currentItem, setCurrentItem] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+   //const [isStudent, setIsStudent] = useState(false);
+
+  useEffect(() => {
+    const userRole = localStorage.getItem('userRole');
+    setIsAdmin(userRole === 'admin');
+   // setIsStudent(userRole === 'student');
+  }, []);
 
   const handleAsignmentSubmit = () => {
     console.log('Zadání uloženo pro:', currentItem);
@@ -65,16 +73,18 @@ const DetailPage = () => {
               </li>
             ))}
           </ul>
-          <button
-            onClick={() => setListModalOpen(true)}
-            className="bg-green-500 hover:bg-green-600 text-white rounded px-4 py-2 transition-all"
-          >
-            Vybrat učitele
-          </button>
+          {isAdmin && (
+            <button
+              onClick={() => setListModalOpen(true)}
+              className="bg-green-500 hover:bg-green-600 text-white rounded px-4 py-2 transition-all"
+            >
+              Vybrat učitele
+            </button>
+          )}
         </div>
         <div className="flex-1 ml-4 bg-white p-4 rounded-lg shadow-md overflow-auto">
           <h2 className="text-lg font-semibold mb-4">Tabulka</h2>
-          
+
           <table className="w-full border-collapse border border-gray-400">
             <thead>
               <tr>
@@ -88,24 +98,32 @@ const DetailPage = () => {
               {editedItems.map((item) => (
                 <tr key={item.id}>
                   <td className="border border-gray-300 px-2 py-1">
-                    <input
-                      type="text"
-                      value={item.name}
-                      onChange={(e) =>
-                        handleEditChange(item.id, 'name', e.target.value)
-                      }
-                      className="w-full px-1 py-1 border border-gray-300 rounded"
-                    />
+                    {isAdmin ? (
+                      <input
+                        type="text"
+                        value={item.name}
+                        onChange={(e) =>
+                          handleEditChange(item.id, 'name', e.target.value)
+                        }
+                        className="w-full px-1 py-1 border border-gray-300 rounded text-base"
+                      />
+                    ) : (
+                      item.name
+                    )}
                   </td>
                   <td className="border border-gray-300 px-2 py-1">
-                    <input
-                      type="date"
-                      value={item.date || ''}
-                      onChange={(e) =>
-                        handleEditChange(item.id, 'date', e.target.value)
-                      }
-                      className="w-full px-1 py-1 border border-gray-300 rounded"
-                    />
+                    {isAdmin ? (
+                      <input
+                        type="date"
+                        value={item.date || ''}
+                        onChange={(e) =>
+                          handleEditChange(item.id, 'date', e.target.value)
+                        }
+                        className="w-full px-1 py-1 border border-gray-300 rounded"
+                      />
+                    ) : (
+                      item.date
+                    )}
                   </td>
                   <td className="border border-gray-300 px-2 py-1">
                     <button
@@ -116,12 +134,12 @@ const DetailPage = () => {
                     </button>
                   </td>
                   <td className="border border-gray-300 px-2 py-1">
-                  <button
-          onClick={() => setAssessmentModalOpen(true)}
-          className="bg-blue-500 hover:bg-blue-600 text-white rounded px-4 py-2 transition-all"
-        >
-          Řešení
-        </button>
+                    <button
+                      onClick={() => setAssessmentModalOpen(true)}
+                      className="bg-blue-500 hover:bg-blue-600 text-white rounded px-2 py-1 transition-all"
+                    >
+                      Řešení
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -138,6 +156,7 @@ const DetailPage = () => {
         listItems={teachers}
         submitButtonText="Přidat"
         cancelButtonText="Zrušit"
+        multipleChoice="no"
       />
 
       <UniversalModal
@@ -150,6 +169,8 @@ const DetailPage = () => {
         cancelButtonText="Zrušit"
         styleType="textarea"
         inputType="text"
+        isAdmin={isAdmin}
+        storageKey={`assignment_${currentItem?.id}`}
       />
 
       {isAssessmentModalOpen && (

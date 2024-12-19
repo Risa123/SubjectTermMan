@@ -1,17 +1,17 @@
-const {getUserColection,ObjectNotFoundException} = require("../database");
+const {getUserCollection,ObjectNotFoundException} = require("../database");
 
 const ROLE_ADMIN = "admin";
 const ROLE_TEACHER = "teacher";
 const ROLE_STUDENT = "student";
 async function get(filter){
-    const result = await getUserColection().findOne(filter);
+    const result = await getUserCollection().findOne(filter);
     if(!result){
        throw new ObjectNotFoundException("user not found");
     }
     return result;
 }
 async function update(filter,update){
-   const result = await getUserColection().updateOne(filter,update);
+   const result = await getUserCollection().updateOne(filter,update);
    if(!result){
       throw new ObjectNotFoundException("user not found");
    }

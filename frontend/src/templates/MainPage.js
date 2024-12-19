@@ -12,6 +12,10 @@ const MainPage = ({ initialIsLoggedIn, userName, allSubjectsPrev, subjectPreview
 
   const navigate = useNavigate();
 
+  const NavigateToHome = () => {
+    navigate("/");
+  };
+
   const NavigateToAllSubjects = () => {
     navigate("/AllSubjects");
   };
@@ -64,9 +68,12 @@ const MainPage = ({ initialIsLoggedIn, userName, allSubjectsPrev, subjectPreview
       <div>
         <header className="w-full h-44 bg-gray-100 flex flex-col items-center p-5 border-b-2 border-solid border-gray-400 relative">
           <div className="w-full flex justify-between items-center px-8">
-            <div className="w-36 h-36 p-2">
+            <button 
+              onClick={NavigateToHome}
+              className="w-36 h-36 p-2 transition-transform hover:scale-105"
+            >
               <img src={logo} alt="Triton Logo" className="w-full h-full object-contain" />
-            </div>
+            </button>
             <h1 className="text-2xl font-semibold absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
               Triton University
             </h1>
@@ -159,9 +166,12 @@ const MainPage = ({ initialIsLoggedIn, userName, allSubjectsPrev, subjectPreview
       <div>
         <header className="w-full h-44 bg-gray-100 flex flex-col items-center p-5 border-b-2 border-solid border-gray-400 relative">
           <div className="w-full flex justify-between items-center px-8">
-            <div className="w-36 h-36 p-2">
+            <button 
+              onClick={NavigateToHome}
+              className="w-36 h-36 p-2 transition-transform hover:scale-105"
+            >
               <img src={logo} alt="Triton Logo" className="w-full h-full object-contain" />
-            </div>
+            </button>
             <h1 className="text-2xl font-semibold absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
               Triton University
             </h1>

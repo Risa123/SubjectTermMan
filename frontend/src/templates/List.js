@@ -3,7 +3,7 @@ import { SubjectContext } from './SubjectProvider';
 import UniversalModal from './Modals/UniversalModal';
 import { useNavigate } from "react-router-dom";
 
-const List = ({ navigateToDetail }) => {
+const List = () => {
   const subjectContext = useContext(SubjectContext);
   const subjects = subjectContext.getSubjects();
   const navigate = useNavigate();
@@ -30,6 +30,7 @@ const List = ({ navigateToDetail }) => {
     });
     setEditModalOpen(true);
   };
+
   const handleOpenDeleteModal = (subject) => {
     setCurrentDeleteSubject(subject);
     setDeleteModalOpen(true);
@@ -43,10 +44,13 @@ const List = ({ navigateToDetail }) => {
     setCurrentDeleteSubject(null);
   };
 
-  const NavigateToDetail = () => {
-    navigate(navigateToDetail);
+  const navigateToDetail = (subject) => {
+    if (subject.subjectTerms && subject.subjectTerms.length > 0) {
+      navigate(`/SubjectDetail/${subject.subjectTerms[0]}`);
+    } else {
+      navigate(`/SubjectTerms/${subject.id}`);
+    }
   };
-
   const handleEditSubmit = (data) => {
     if (currentEditSubject) {
       subjectContext.editSubject(currentEditSubject.id, data);
@@ -61,16 +65,22 @@ const List = ({ navigateToDetail }) => {
         {subjects.map((subject) => (
           <li
             key={subject.id}
-            className="py-2 px-4 rounded-lg bg-slate-400 hover:bg-slate-600 transition-all flex justify-between items-center"
+            className="py-2 px-4 rounded-lg bg-slate-400 hover:bg-slate-600 transition-all flex justify-between items-center cursor-pointer"
           >
-            <div className="flex-grow">
-              <span className="text-lg" onClick={NavigateToDetail}>{subject.name}</span>
+            <div 
+              className="flex-grow"
+              onClick={() => navigateToDetail(subject)}
+            >
+              <span className="text-lg">{subject.name}</span>
             </div>
             <div className="flex space-x-2">
               {isAdmin && (
                 <>
                   <button
-                    onClick={() => handleOpenEditModal(subject)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleOpenEditModal(subject);
+                    }}
                     className="bg-yellow-500 hover:bg-yellow-600 text-white rounded px-2 py-1 transition-all duration-300"
                   >
                     <svg
@@ -89,7 +99,10 @@ const List = ({ navigateToDetail }) => {
                     </svg>
                   </button>
                   <button
-                    onClick={() => handleOpenDeleteModal(subject)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleOpenDeleteModal(subject);
+                    }}
                     className="bg-red-500 hover:bg-red-600 text-white rounded px-2 py-1 transition-all duration-300"
                   >
                     <svg
@@ -112,18 +125,24 @@ const List = ({ navigateToDetail }) => {
                   </button>
                 </>
               )}
-              {isStudent && (
+              {isStudent && subject.subjectTerms.map(term => (
                 <button
-                  onClick={() => subjectContext.handleSignIn(subject.id)}
+                key={term._id}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  const studentId = localStorage.getItem('studentId');
+                  subjectContext.handleSignIn(term._id, term, studentId);  // Předejte term._id místo subject.id
+                }}
                   className={`rounded px-2 py-1 text-white ${
-                    subject.isClicked
+                    term.students?.includes(/* student ID */) // check if student is already signed up
                       ? 'bg-gray-400 cursor-not-allowed'
                       : 'bg-blue-500 hover:bg-blue-600'
-                  }`}
+                  } transition-all duration-300`}
+                  disabled={term.students?.includes(/* student ID */)}
                 >
-                  {subject.isClicked ? 'Byl jsi zapsán do předmětu' : 'Zapsat'}
+                  {term.students?.includes(/* student ID */) ? 'Zapsáno' : 'Zapsat'}
                 </button>
-              )}
+              ))}
             </div>
           </li>
         ))}

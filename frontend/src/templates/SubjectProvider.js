@@ -7,6 +7,22 @@ export const SubjectProvider = ({ children }) => {
   const [subjects, setSubjects] = useState([]);
   const [isCreateModalOpen, setCreateModalOpen] = useState(false);
 
+  const updateSubjectWithTerm = async (subjectId, updatedSubjectTerm) => {
+    console.log('updateSubjectWithTerm called with:', subjectId, updatedSubjectTerm);
+    setSubjects(subjects.map(subject => {
+      if (subject._id === subjectId) {
+        return {
+          ...subject,
+          subjectTerms: subject.subjectTerms.map(term =>
+            term._id === updatedSubjectTerm._id ? updatedSubjectTerm : term
+          ),
+          subjectTerm: updatedSubjectTerm._id
+        };
+      }
+      return subject;
+    }));
+  };
+
   const fetchSubjects = async () => {
     const storedToken = localStorage.getItem('authToken');
     if (!storedToken) {
@@ -24,7 +40,9 @@ export const SubjectProvider = ({ children }) => {
           name: subject.name,
           credits: subject.credits,
           info: subject.info,
-          isClicked: false
+          isClicked: false,
+          subjectTerms: subject.subjectTerms || [],
+          subjectTerm: subject.subjectTerms?.[0]?._id || null // Použijte _id místo celého objektu
         }));
         setSubjects(transformedData || []);
       }
@@ -37,11 +55,41 @@ export const SubjectProvider = ({ children }) => {
     fetchSubjects();
   }, []);
 
-  const handleSignIn = (id) => {
-    setSubjects(subjects.map(subject =>
-      subject._id === id ? { ...subject, isClicked: true } : subject
-    ));
-  };
+  const handleSignIn = async (subjectId, subjectTerm, studentId) => {
+  console.log('handleSignIn called with:', subjectId, subjectTerm, studentId);
+  const storedToken = localStorage.getItem('authToken');
+  if (!storedToken) {
+    console.error('No auth token found');
+    return;
+  }
+
+  if (!subjectTerm || !subjectTerm._id) {
+    console.error('Invalid subjectTerm');
+    return;
+  }
+
+  if (!studentId) {
+    console.error('Invalid studentId');
+    return;
+  }
+
+  try {
+    const response = await post('subjectTerm/signUp', {
+      authToken: storedToken,
+      subjectTerm: subjectTerm._id,
+      studentId: studentId
+    });
+
+    if (response.ok) {
+      console.log('Server response:', response);
+      fetchSubjects(); // Znovu načtěte subjects po úspěšném zápisu
+    } else {
+      console.error('Error signing up, server responded with:', response.status);
+    }
+  } catch (error) {
+    console.error('Error signing up:', error);
+  }
+};
 
   const addNewSubject = async (data) => {
     const storedToken = localStorage.getItem('authToken');
@@ -63,12 +111,9 @@ export const SubjectProvider = ({ children }) => {
       if (response.ok) {
         await fetchSubjects();
         setCreateModalOpen(false);
-      } else {
-        const errorText = await response.text();
-        console.error('Server response:', response.status, errorText);
       }
     } catch (error) {
-      console.error('Error details:', error);
+      console.error('Error creating subject:', error);
     }
   };
 
@@ -87,8 +132,6 @@ export const SubjectProvider = ({ children }) => {
 
       if (response.ok) {
         await fetchSubjects();
-      } else {
-        console.error('Error deleting subject');
       }
     } catch (error) {
       console.error('Error deleting subject:', error);
@@ -113,9 +156,6 @@ export const SubjectProvider = ({ children }) => {
 
       if (response.ok) {
         await fetchSubjects();
-      } else {
-        const errorText = await response.text();
-        console.error('Error updating subject:', errorText);
       }
     } catch (error) {
       console.error('Error updating subject:', error);
@@ -128,7 +168,9 @@ export const SubjectProvider = ({ children }) => {
       name: subject.name,
       credits: subject.credits,
       info: subject.info,
-      isClicked: subject.isClicked
+      isClicked: subject.isClicked,
+      subjectTerms: subject.subjectTerms, // Přidáváme celé pole subjectTerms
+      subjectTerm: subject.subjectTerm // Zachováváme pro zpětnou kompatibilitu
     }));
   };
 
@@ -142,7 +184,8 @@ export const SubjectProvider = ({ children }) => {
         addNewSubject,
         deleteSubject,
         editSubject,
-        getSubjects
+        getSubjects,
+        updateSubjectWithTerm // přidáme novou funkci do contextu
       }}
     >
       {children}

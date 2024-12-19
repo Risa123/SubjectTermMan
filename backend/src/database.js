@@ -23,7 +23,7 @@ async function close(){
  await mongo.close();
 }
 
-function getUserColection(){
+function getUserCollection(){
   return userCollection;
 }
 
@@ -49,5 +49,5 @@ class ObjectNotFoundException extends Error{
   }
 }
 
-module.exports = {connect,close,getUserColection,getSubjectCollection,getSubjectTermCollection,getActivityCollection,
+module.exports = {connect,close,getUserCollection,getSubjectCollection,getSubjectTermCollection,getActivityCollection,
   ObjectNotFoundException,getAuditLogCollection};
