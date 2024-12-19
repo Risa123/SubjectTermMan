@@ -8,7 +8,8 @@ module.exports = async request =>{
     _id:crypto.randomUUID(),
     name:request.name,
     info:request.info,
-    credits:request.credits
+    credits:request.credits,
+    subjectTerms:[]
   };
   await create(subject);
   log(user,`created subject ${JSON.stringify(subject)}`);

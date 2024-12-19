@@ -16,8 +16,8 @@ async function create(subjectTerm){
     await getSubjectTermCollection().insertOne(subjectTerm);
 }
 
-async function list(){
-  return (await database.getSubjectTermCollection().find({})).toArray();
+async function list(filter,projection){
+  return (await getSubjectTermCollection().find(filter,{projection:projection})).toArray();
 }
 
 async function update(id,update){
