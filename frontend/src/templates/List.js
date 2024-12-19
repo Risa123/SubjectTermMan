@@ -150,6 +150,7 @@ const List = ({ navigateToDetail }) => {
         submitButtonText="Vytvořit"
         cancelButtonText="Zrušit"
         styleType="threeinputs"
+        secondInputType="number"
         inputType="text"
       />
 
@@ -165,6 +166,7 @@ const List = ({ navigateToDetail }) => {
         cancelButtonText="Zrušit"
         styleType="threeinputs"
         inputType="text"
+        secondInputType="number"
         defaultValues={{
           inputValue: currentEditSubject?.inputValue || '',
           secondInputValue: currentEditSubject?.secondInputValue || '',

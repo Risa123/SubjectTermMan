@@ -11,7 +11,8 @@ const ThreeInputsModal = ({
   submitButtonText,
   cancelButtonText,
   inputType,
-  defaultValues
+  defaultValues,
+  secondInputType
 }) => {
   const [inputValue, setInputValue] = useState('');
   const [secondInputValue, setSecondInputValue] = useState('');
@@ -62,7 +63,7 @@ const ThreeInputsModal = ({
           </div>
           <div className="mb-4">
             <input
-              type={inputType}
+              type={secondInputType}
               value={secondInputValue}
               onChange={(e) => setSecondInputValue(e.target.value)}
               className="w-full p-2 border border-gray-300 rounded"
